@@ -1,0 +1,17 @@
+version: "3"
+services:
+  master:
+    container_name: master
+    image: jenkinsci/jenkins:2.142-slim
+    ports:
+      - 8080:8080
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+    links:
+      - slave01
+
+slave01:
+  container_name: slave01
+  image: jenkinsci/ssh-slave
+  environment:
+    - JENKINS_SLAVE_SHH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC7nqjLh5sXo9m8u+V4Zt2v0z5kH7l6X9n1v   
