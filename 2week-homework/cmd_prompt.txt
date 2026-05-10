@@ -1,0 +1,37 @@
+docker image build -t example/cronjob:latest .  
+docker container run -d --rm --name cronjob example/cronjob:latest
+docker container exec -it cronjob tail -f /var/log/cron.log
+
+데이터 불륨을 생성하는 명령어
+docker container run [options] -v 호스트_디렉터리:컨테이너_디렉터리 리포지토리명[:태그] [명령] [명령인자]
+
+docker container run -v ${PWD}:/workspace gihyodocker/imagemagick:latest convert -size 100x100 xc:#000000 /workspace/gihyo.jpg
+
+docker container run -d -p 8080:8080 -v "${PWD}/jenkins_home:/var/jenkins_home" jenkins/jenkins:lts
+
+docker image build -t example/mysql-data:latest .
+docker container run -d --name mysql-data example/mysql-data:latest
+
+docker container run -d --rm --name mysql -e "MYSQL_ALLOW_EMPTY_PASSWORD=yes" -e "MYSQL_DATABASE=volume_test" -e "MYSQL_USER=example" -e "MYSQL_PASSWORD=example" --volumes-from mysql-data mysql:5.7
+
+docker-compose up -d
+docker container ls
+docker container exec -it manager docker swarm init
+
+도커 레지스트리에 이미지 등록하기
+docker image tag example/echo:latest localhost:5000/example/echo:latest
+
+docker image push localhost:5000/example/echo:latest
+
+스택배포하기
+docker stack deploy [options] 스택명
+
+배포된 스택 확인하기
+docker stack services [options] 스택명
+
+스택에 배포된 컨테이너 확인하기
+docker stack ps [options] 스택명
+
+스택 삭제하기
+docker container exec -it manager docker stack rm echo
+
