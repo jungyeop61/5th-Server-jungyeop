@@ -1,0 +1,7 @@
+FROM fluent/fluentd:v0.12-debian
+
+RUN gem install multi_json -v 1.15.0 --no-document
+RUN gem install logger -v 1.4.2 --no-document
+RUN gem install fluent-plugin-elasticsearch -v 1.9.2 --no-document --ignore-dependencies
+
+COPY fluent.conf /fluentd/etc/fluent.conf
